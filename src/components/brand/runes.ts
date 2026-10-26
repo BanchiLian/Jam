@@ -1,0 +1,37 @@
+// Traços (linhas finas) das runas do Futhark em caixa 0..10 x 0..20.
+// Cobre o Futhark Jovem completo + algumas do Ancião. Desenho próprio, sem dependência de fonte.
+export const RUNE_PATHS: Record<string, string> = {
+  "ᚠ": "M5 0V20M5 6L10 2M5 12L10 8",
+  "ᚢ": "M1 20V0L9 8V20",
+  "ᚦ": "M3 0V20M3 5L9 10L3 15",
+  "ᚬ": "M5 0V20M5 3L10 8M5 9L10 14",
+  "ᚱ": "M2 0V20M2 0L8 5L2 11L9 20",
+  "ᚴ": "M4 0V20M4 11L9 6",
+  "ᚼ": "M5 0V20M1 4L9 16M9 4L1 16",
+  "ᚾ": "M5 0V20M1 7L9 13",
+  "ᛁ": "M5 0V20",
+  "ᛅ": "M5 0V20M5 9L10 4",
+  "ᛋ": "M8 0L2 7L8 13L2 20",
+  "ᛏ": "M5 0V20M1 6L5 0L9 6",
+  "ᛒ": "M2 0V20M2 0L8 5L2 10L8 15L2 20",
+  "ᛘ": "M2 0V20M8 0V20M2 4L8 12",
+  "ᛚ": "M3 0V20M3 6L9 1",
+  "ᛦ": "M5 0V20M0 4L5 10L10 4",
+  "ᚨ": "M3 0V20M3 3L9 8M3 9L9 14",
+  "ᚲ": "M8 3L3 10L8 17",
+  "ᚷ": "M1 2L9 18M9 2L1 18",
+  "ᚹ": "M2 0V20M2 3L8 8L2 13",
+  "ᚺ": "M2 0V20M8 0V20M2 7L8 13",
+  "ᛈ": "M2 0V20M2 0L8 4V12L2 16",
+  "ᛉ": "M5 20V4M1 0L5 8L9 0",
+  "ᛊ": "M8 0L2 7L8 13L2 20",
+  "ᛗ": "M2 0V20M10 0V20M2 0L6 8L10 0",
+  "ᛞ": "M2 0V20M10 0V20M2 0L10 20M10 0L2 20",
+  "ᛟ": "M5 0L1 5L5 10L9 5ZM3 20L5 10L7 20",
+  "ᛃ": "M5 0V20M5 6L1 10L5 14",
+  "ᛇ": "M2 4L8 10L2 16M8 4L2 10L8 16",
+  "ᛜ": "M5 2L1 10L5 18L9 10Z",
+  "ᛖ": "M2 0V20M8 0V20M2 0L5 6L8 0",
+};
+
+export const FUTHARK_RING = "ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ".split("");
