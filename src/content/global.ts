@@ -118,7 +118,6 @@ export const runasNome = {
 export const a11y = {
   logo: "Huldra, ir para a página inicial",
   simbolo: "Símbolo da Huldra: duas estrelas de seis braços levemente sobrepostas",
-  canvas3d: "Cena tridimensional decorativa: monólito de pedra com runas azuis em meio à névoa",
   vegvisir: "Vegvísir, compasso rúnico de oito braços, desenhado em linhas de luz",
   runa: "Runa decorativa",
   instagram: "Instagram da Huldra, abre em nova aba",

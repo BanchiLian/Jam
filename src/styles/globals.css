@@ -100,7 +100,14 @@ body {
 
 .tabular { font-variant-numeric: tabular-nums; }
 
-/* Fundo de seção: noite + gradiente sutil (também é o fallback sem WebGL) */
+/* Abaixo da dobra: pula layout/pintura até chegar perto da viewport. Exclui os heros (acima da dobra): com
+   o tamanho intrínseco de 800px o hero ocupava 800px no 1º layout e encolhia depois, causando CLS. */
+main > [data-section]:not([data-section="hero"]):not([data-section="manifesto"]):not([data-section="page-hero"]) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+/* Fundo de seção: noite + gradiente sutil */
 .bg-section-glow {
   background:
     radial-gradient(60% 50% at 80% 10%, rgb(47 87 164 / 0.22), transparent 70%),

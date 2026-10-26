@@ -3,7 +3,6 @@
 import { useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { hud } from "@/content/global";
-import { ambient } from "@/lib/motion/audio";
 import { useExperience } from "@/store/useExperience";
 
 const bar = (on: boolean, i: number) =>
@@ -23,10 +22,12 @@ export function SoundToggle() {
 
   if (!slot) return null;
 
-  const onClick = () => {
+  const onClick = async () => {
     const next = !useExperience.getState().soundOn;
-    ambient.setEnabled(next); // dentro do gesto do clique (autoplay policy)
     useExperience.getState().setSoundOn(next);
+    // Áudio fora do bundle inicial: importado só no clique (o gesto é preservado após o await do módulo já em cache/rede rápida).
+    const { ambient } = await import("@/lib/motion/audio");
+    ambient.setEnabled(next);
   };
 
   return createPortal(

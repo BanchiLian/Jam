@@ -33,6 +33,10 @@ export const contato = {
       consentimento: "Para enviar, aceite a política de privacidade.",
     },
     sucesso: { titulo: "Mensagem enviada.", texto: "Recebemos sua mensagem. Em breve falamos com você." },
+    indisponivel: {
+      titulo: "Formulário temporariamente indisponível.",
+      texto: "Enquanto isso, fale com a gente pelo Instagram @somoshuldra.",
+    },
     falha: {
       titulo: "Não conseguimos enviar.",
       texto: "Algo falhou no caminho. Tente de novo ou fale pelo Instagram.",

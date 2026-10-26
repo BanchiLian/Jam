@@ -3,6 +3,8 @@
  * Vento: ruído marrom filtrado com LFOs. Ressonância grave: osciladores baixos em batimento.
  * Só cria o AudioContext após clique (política de autoplay); fade in/out.
  */
+import { useExperience } from "@/store/useExperience";
+
 type AC = typeof AudioContext;
 
 class Ambient {
@@ -95,8 +97,20 @@ class Ambient {
         if (document.hidden) void this.ctx.suspend();
         else if (this.enabled) void this.ctx.resume();
       });
+      // bf-cache: libera o AudioContext ao sair da página; religar exige novo clique.
+      window.addEventListener("pagehide", () => this.dispose());
     }
     return true;
+  }
+
+  private dispose() {
+    if (this.suspendTimer) clearTimeout(this.suspendTimer);
+    const ctx = this.ctx;
+    this.ctx = null;
+    this.master = null;
+    this.enabled = false;
+    if (ctx) void ctx.close().catch(() => {});
+    useExperience.getState().setSoundOn(false);
   }
 
   /** Deve ser chamado dentro de um gesto do usuário ao ligar. */

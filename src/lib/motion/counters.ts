@@ -19,10 +19,10 @@ export function setupCounters(root: ParentNode): () => void {
       return comma ? t.replace(".", ",") : t;
     };
 
-    const w = el.getBoundingClientRect().width;
-    const prev = { display: el.style.display, minWidth: el.style.minWidth, textAlign: el.style.textAlign };
+    const prev = { display: el.style.display, minWidth: el.style.minWidth, textAlign: el.style.textAlign, fvn: el.style.fontVariantNumeric };
     el.style.display = "inline-block";
-    el.style.minWidth = `${Math.ceil(w)}px`;
+    el.style.minWidth = `${finalText.length}ch`;
+    el.style.fontVariantNumeric = "tabular-nums";
     el.style.textAlign = "left";
     el.setAttribute("aria-hidden", "true");
     const sr = document.createElement("span");
@@ -49,6 +49,7 @@ export function setupCounters(root: ParentNode): () => void {
       el.style.display = prev.display;
       el.style.minWidth = prev.minWidth;
       el.style.textAlign = prev.textAlign;
+      el.style.fontVariantNumeric = prev.fvn;
     });
   });
 

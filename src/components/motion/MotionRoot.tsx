@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { prefersReducedMotion, useReducedMotion } from "@/hooks/useReducedMotion";
 import { setupCounters } from "@/lib/motion/counters";
 import { setupHeader, setupHud } from "@/lib/motion/page";
@@ -22,16 +22,30 @@ export function MotionRoot() {
     useExperience.getState().setReducedMotion(reduced);
   }, [reduced]);
 
-  // Por rota (layout effect: estado inicial dos reveals antes do paint).
-  useLayoutEffect(() => {
-    const cleanups: Array<() => void> = [setupHud()];
-    if (!prefersReducedMotion()) {
-      const waitReady = !useExperience.getState().preloaderDone;
-      cleanups.push(setupReveals(document.body, waitReady));
-      cleanups.push(setupCounters(document.body));
-      cleanups.push(setupHeader());
-    }
-    return () => cleanups.splice(0).reverse().forEach((fn) => fn());
+  // Por rota, adiado para ocioso depois do 1º paint (nada de trabalho no caminho do LCP).
+  useEffect(() => {
+    const cleanups: Array<() => void> = [];
+    let cancelled = false;
+    const init = () => {
+      if (cancelled) return;
+      cleanups.push(setupHud());
+      if (!prefersReducedMotion()) {
+        cleanups.push(setupReveals(document.body));
+        cleanups.push(setupCounters(document.body));
+        cleanups.push(setupHeader());
+      }
+    };
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    const id = typeof w.requestIdleCallback === "function" ? w.requestIdleCallback(init, { timeout: 1500 }) : window.setTimeout(init, 200);
+    return () => {
+      cancelled = true;
+      if (typeof w.requestIdleCallback === "function") w.cancelIdleCallback?.(id);
+      else window.clearTimeout(id);
+      cleanups.splice(0).reverse().forEach((fn) => fn());
+    };
   }, [pathname, reduced]);
 
   // Menu fullscreen: trava o scroll do body enquanto aberto e escalona a entrada dos itens.
